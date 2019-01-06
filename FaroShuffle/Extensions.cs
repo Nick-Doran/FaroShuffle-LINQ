@@ -19,7 +19,7 @@ namespace FaroShuffle
             }
         }
 
-        public static bool Equalss<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        public static bool SequenceEquals<T>(this IEnumerable<T> first, IEnumerable<T> second)
         {
             var firstIter = first.GetEnumerator();
             var secondIter = second.GetEnumerator();

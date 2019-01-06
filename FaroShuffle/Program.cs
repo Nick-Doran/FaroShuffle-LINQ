@@ -9,37 +9,56 @@ namespace FaroShuffle
         static void Main(string[] args)
         {
             var startingDeck =
-                from s in Suits()
+                (from s in Suits()
                 from r in Ranks()
-                select new { Suit = s, Rank = r };
+                select new { Suit = s, Rank = r }).ToArray();
 
-            foreach ( var card in startingDeck)
+            foreach (var card in startingDeck)
             {
                 Console.WriteLine(card);
             }
             Console.ReadKey();
 
-            var top = startingDeck.Take(26);
-            var bottom = startingDeck.Skip(26);
-            var shuffle= top.InterleaveSequenceWith(bottom);
+            //var top = startingDeck.Take(26);
+            //var bottom = startingDeck.Skip(26);
+            var shuffle = startingDeck.Skip(26).InterleaveSequenceWith(startingDeck.Take(26));
             foreach (var card in shuffle)
             {
                 Console.WriteLine(card);
             }
             Console.ReadKey();
-
-            int i = 0;
-            while(!startingDeck.Equalss(shuffle))
+            var times = 0;
+            // We can re-use the shuffle variable from earlier, or you can make a new one
+            shuffle = startingDeck;
+            do
             {
-                i++;
-                top = shuffle.Take(26);
-                bottom = shuffle.Skip(26);
-                shuffle = top.InterleaveSequenceWith(bottom);
-            }
-            Console.WriteLine(i);
-            Console.ReadLine();
+                shuffle = shuffle.Skip(26).InterleaveSequenceWith(shuffle.Take(26)).ToArray();
 
+                foreach (var card in shuffle)
+                {
+                    Console.WriteLine(card);
+                }
+                Console.WriteLine();
+                times++;
+
+            } while (!startingDeck.SequenceEquals(shuffle));
+
+            Console.WriteLine(times);
         }
+        //int i = 0;
+        //shuffle = startingDeck;
+        //shuffle = shuffle.Skip(26).InterleaveSequenceWith(shuffle.Take(26));
+
+
+        //while (!startingDeck.SequenceEquals(shuffle))
+        //{
+        //    i++;
+        //    shuffle = shuffle.Skip(26).InterleaveSequenceWith(shuffle.Take(26));
+        //}
+        //Console.WriteLine(i);
+        //Console.ReadLine();
+
+
         static IEnumerable<string> Suits()
         {
             yield return "clubs";

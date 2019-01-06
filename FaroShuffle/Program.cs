@@ -28,6 +28,17 @@ namespace FaroShuffle
             }
             Console.ReadKey();
 
+            int i = 0;
+            while(!startingDeck.Equalss(shuffle))
+            {
+                i++;
+                top = shuffle.Take(26);
+                bottom = shuffle.Skip(26);
+                shuffle = top.InterleaveSequenceWith(bottom);
+            }
+            Console.WriteLine(i);
+            Console.ReadLine();
+
         }
         static IEnumerable<string> Suits()
         {

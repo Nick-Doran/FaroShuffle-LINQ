@@ -18,6 +18,16 @@ namespace FaroShuffle
                 Console.WriteLine(card);
             }
             Console.ReadKey();
+
+            var top = startingDeck.Take(26);
+            var bottom = startingDeck.Skip(26);
+            var shuffle= top.InterleaveSequenceWith(bottom);
+            foreach (var card in shuffle)
+            {
+                Console.WriteLine(card);
+            }
+            Console.ReadKey();
+
         }
         static IEnumerable<string> Suits()
         {
